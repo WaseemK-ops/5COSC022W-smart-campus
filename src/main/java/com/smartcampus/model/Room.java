@@ -3,11 +3,20 @@ package com.smartcampus.model;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Room {
 
+    // Unique room code
     private String id;
+
+    // name shown to facilities managers
     private String name;
+
+    // Maximum number of people allowed in this room (fire safety)
     private int capacity;
+
+    // List of sensor IDs currently deployed in this room
+
     private List<String> sensorIds = new ArrayList<>();
 
     public Room() {}

@@ -1,11 +1,23 @@
 package com.smartcampus.model;
 
+
 public class Sensor {
 
-    private String id;
+    // Unique sensor code
+
+    // Category of sensor: Temperature, CO2, Occupancy, Light etc.
     private String type;
-    private String status;
+
+    // Current operational state: ACTIVE, MAINTENANCE, or OFFLINE
+
+    private String status; // Only ACTIVE sensors can receive new readings ...
+
+    // The most recent measurement recorded by this sensor
+    // Gets updated every time a new reading is posted
     private double currentValue;
+
+
+    // Foreign key linking this sensor to its parent room
     private String roomId;
 
     public Sensor() {}
