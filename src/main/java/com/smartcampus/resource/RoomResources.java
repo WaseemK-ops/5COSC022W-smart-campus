@@ -33,7 +33,7 @@ import java.util.Map;
 @Path("/rooms")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class RoomResource {
+public class RoomResources {
 
     // Reference to the shared static room storage ...
     private final Map<String, Room> roomStorage = DataStore.getRooms();
