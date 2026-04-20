@@ -19,14 +19,7 @@ import java.util.Map;
  * by the sub-resource locator method in SensorResource. JAX-RS then
  * uses this instance to handle all /sensors/{sensorId}/readings requests.
  *
- * Benefits of this pattern:
- * - Reading logic is fully isolated from sensor logic
- * - Each class has one clear responsibility
- * - Much easier to test and maintain independently
- * - Avoids one massive controller handling everything
  *
- * Side effect: every successful POST updates the parent sensor's
- * currentValue field to keep data consistent across the API.
  */
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
