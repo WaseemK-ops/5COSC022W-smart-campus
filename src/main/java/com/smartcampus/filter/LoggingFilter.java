@@ -9,6 +9,9 @@ import jakarta.ws.rs.ext.Provider;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+
+
+
 /**
  * Cross-cutting logging filter for the Smart Campus API.
  *
@@ -24,29 +27,38 @@ import java.util.logging.Logger;
 @Provider
 public class LoggingFilter implements ContainerRequestFilter, ContainerResponseFilter {
 
-    private static final Logger LOGGER = Logger.getLogger(LoggingFilter.class.getName());
+    private static final Logger API_LOGGER = Logger.getLogger(LoggingFilter.class.getName());
 
     /**
-     * Logs every incoming HTTP request.
-     * Captures the method (GET, POST etc.) and the full request URI.
+     * It logs every incoming HTTP request.
+     * Captures the method (GET, POST etc.) and  the  full request URI .
      */
+    
+    
+    
+    
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
-        LOGGER.info(String.format(">> REQUEST  [%s] %s",
+        API_LOGGER.info(String.format(">> REQUEST  [%s] %s",
                 requestContext.getMethod(),
                 requestContext.getUriInfo().getRequestUri()));
     }
 
     /**
-     * Logs every outgoing HTTP response.
-     * Captures the final status code returned to the client.
+     * Logs  every outgoing HTTP response.
+     * It captures the final status code returned to the client .
      */
+    
+    
+    
     @Override
-    public void filter(ContainerRequestContext requestContext,
-                       ContainerResponseContext responseContext) throws IOException {
-        LOGGER.info(String.format("<< RESPONSE [%s] %d %s",
-                requestContext.getMethod(),
-                responseContext.getStatus(),
-                requestContext.getUriInfo().getRequestUri()));
+    
+    public void filter(ContainerRequestContext httpRequest,
+                       ContainerResponseContext httpResponse) throws IOException {
+        API_LOGGER.info(String.format("<< RESPONSE [%s] %d %s",
+                httpRequest.getMethod(),
+                httpResponse.getStatus(),
+                httpRequest.getUriInfo().getRequestUri()));
     }
+    
 }

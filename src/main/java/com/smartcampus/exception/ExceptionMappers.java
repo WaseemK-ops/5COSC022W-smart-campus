@@ -9,8 +9,21 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 /**
- * 409 Conflict — room still has sensors assigned to it.
+ * All exception mappers for the Smart Campus API.
+ *
+ * Each mapper catches a specific exception and converts it into
+ * a clean JSON error response. This means the API never leaks
+ * raw Java errors to the client - everything is handled cleanly.
+ *
+ * 409 - Room still has sensors (RoomNotEmptyException)
+ * 422 - Referenced roomId doesn't exist (LinkedResourceNotFoundException)
+ * 403 - Sensor is under maintenance (SensorUnavailableException)
+ * 500 - Anything unexpected (GlobalExceptionMapper catches everything)
  */
+
+
+
+
 @Provider
 class RoomNotEmptyExceptionMapper implements ExceptionMapper<RoomNotEmptyException> {
     @Override
@@ -32,7 +45,7 @@ class RoomNotEmptyExceptionMapper implements ExceptionMapper<RoomNotEmptyExcepti
  *
  * 422 is used instead of 404 because the URL itself is valid.
  * The problem is a bad reference inside the JSON payload, making
- * the request semantically unprocessable despite being syntactically correct.
+ * the request contextually unprocessable despite being syntactically correct.
  */
 @Provider
 class LinkedResourceNotFoundExceptionMapper implements ExceptionMapper<LinkedResourceNotFoundException> {
@@ -49,11 +62,16 @@ class LinkedResourceNotFoundExceptionMapper implements ExceptionMapper<LinkedRes
     }
 }
 
+
+
+
+
 /**
- * 403 Forbidden — sensor is under maintenance.
+ * 403 Forbidden — The  sensor is under maintenance.
  */
 @Provider
 class SensorUnavailableExceptionMapper implements ExceptionMapper<SensorUnavailableException> {
+    
     @Override
     public Response toResponse(SensorUnavailableException e) {
         return Response.status(Response.Status.FORBIDDEN)
@@ -69,24 +87,25 @@ class SensorUnavailableExceptionMapper implements ExceptionMapper<SensorUnavaila
 
 /**
  * 500 Global Safety Net — catches ALL unexpected exceptions.
- *
- * Exposing raw stack traces is a security risk because they reveal:
- * - Internal class names and package structure
- * - Library names and versions (enables CVE exploitation)
- * - File system paths and business logic flow
- *
+
  * This mapper intercepts everything and returns a clean generic 500
  * so no internal detail ever reaches the client.
  */
+
+
+
+
 @Provider
 class GlobalExceptionMapper implements ExceptionMapper<Throwable> {
+    
+    
 
-    private static final Logger LOGGER = Logger.getLogger(GlobalExceptionMapper.class.getName());
+    private static final Logger ERROR_LOGGER = Logger.getLogger(GlobalExceptionMapper.class.getName());
 
     @Override
     public Response toResponse(Throwable e) {
         // Log full detail server-side only - never expose to client
-        LOGGER.severe("Unhandled exception: " + e.getClass().getName() + " — " + e.getMessage());
+        ERROR_LOGGER.severe("Unhandled exception: " + e.getClass().getName() + " — " + e.getMessage());
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                 .type(MediaType.APPLICATION_JSON)
                 .entity(Map.of(

@@ -1,7 +1,7 @@
 package com.smartcampus.store;
 
 import com.smartcampus.model.Room;
-import com.smartcampus.model.Sensor;
+import com.smartcampus.model.CampusSensor;
 import com.smartcampus.model.SensorReading;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class DataStore {
     private static final Map<String, Room> roomStorage = new ConcurrentHashMap<>();
 
     // All sensors stored by their unique sensor ID
-    private static final Map<String, Sensor> sensorStorage = new ConcurrentHashMap<>();
+    private static final Map<String, CampusSensor> sensorStorage = new ConcurrentHashMap<>();
 
     // Historical readings per sensor, stored by sensor ID
     private static final Map<String, List<SensorReading>> readingLog = new ConcurrentHashMap<>();
@@ -105,13 +105,13 @@ public class DataStore {
         // ══════════════════════════════════════════════════════
         //  SENSORS — Spencer Building
         // ══════════════════════════════════════════════════════
-        Sensor tempSp1  = new Sensor("TEMP-SP-1",  "Temperature", "ACTIVE",      22.1, "SP-1LA");
-        Sensor co2Sp2   = new Sensor("CO2-SP-2",   "CO2",         "ACTIVE",      415.0,"SP-2LA");
-        Sensor occSp3   = new Sensor("OCC-SP-3",   "Occupancy",   "ACTIVE",      35.0, "SP-3LA");
-        Sensor lightSp4 = new Sensor("LIGHT-SP-4", "Light",       "MAINTENANCE", 0.0,  "SP-4LA");
-        Sensor humSp5   = new Sensor("HUM-SP-5",   "Humidity",    "ACTIVE",      55.0, "SP-5LA");
-        Sensor tempSp6  = new Sensor("TEMP-SP-6",  "Temperature", "ACTIVE",      21.8, "SP-6LA");
-        Sensor co2Sp7   = new Sensor("CO2-SP-7",   "CO2",         "OFFLINE",     0.0,  "SP-7LA");
+        CampusSensor tempSp1  = new CampusSensor("TEMP-SP-1",  "Temperature", "ACTIVE",      22.1, "SP-1LA");
+        CampusSensor co2Sp2   = new CampusSensor("CO2-SP-2",   "CO2",         "ACTIVE",      415.0,"SP-2LA");
+        CampusSensor occSp3   = new CampusSensor("OCC-SP-3",   "Occupancy",   "ACTIVE",      35.0, "SP-3LA");
+        CampusSensor lightSp4 = new CampusSensor("LIGHT-SP-4", "Light",       "MAINTENANCE", 0.0,  "SP-4LA");
+        CampusSensor humSp5   = new CampusSensor("HUM-SP-5",   "Humidity",    "ACTIVE",      55.0, "SP-5LA");
+        CampusSensor tempSp6  = new CampusSensor("TEMP-SP-6",  "Temperature", "ACTIVE",      21.8, "SP-6LA");
+        CampusSensor co2Sp7   = new CampusSensor("CO2-SP-7",   "CO2",         "OFFLINE",     0.0,  "SP-7LA");
 
         sensorStorage.put(tempSp1.getId(),  tempSp1);
         sensorStorage.put(co2Sp2.getId(),   co2Sp2);
@@ -122,29 +122,29 @@ public class DataStore {
         sensorStorage.put(co2Sp7.getId(),   co2Sp7);
 
 
-        sp1La.getSensorIds().add("TEMP-SP-1");
-        sp2La.getSensorIds().add("CO2-SP-2");
-        sp3La.getSensorIds().add("OCC-SP-3");
-        sp4La.getSensorIds().add("LIGHT-SP-4");
-        sp5La.getSensorIds().add("HUM-SP-5");
-        sp6La.getSensorIds().add("TEMP-SP-6");
-        sp7La.getSensorIds().add("CO2-SP-7");
+        sp1La.getDeployedSensorIds().add("TEMP-SP-1");
+        sp2La.getDeployedSensorIds().add("CO2-SP-2");
+        sp3La.getDeployedSensorIds().add("OCC-SP-3");
+        sp4La.getDeployedSensorIds().add("LIGHT-SP-4");
+        sp5La.getDeployedSensorIds().add("HUM-SP-5");
+        sp6La.getDeployedSensorIds().add("TEMP-SP-6");
+        sp7La.getDeployedSensorIds().add("CO2-SP-7");
 
         // ══════════════════════════════════════════════════════
         //  SENSORS — Gregory Peck Building (including Auditorium)
         // ══════════════════════════════════════════════════════
-        Sensor tempGp1  = new Sensor("TEMP-GP-1",  "Temperature", "ACTIVE",      23.0, "GP-1LA");
-        Sensor co2Gp2   = new Sensor("CO2-GP-2",   "CO2",         "ACTIVE",      400.0,"GP-2LA");
-        Sensor occGp3   = new Sensor("OCC-GP-3",   "Occupancy",   "ACTIVE",      42.0, "GP-3LA");
-        Sensor lightGp4 = new Sensor("LIGHT-GP-4", "Light",       "ACTIVE",      320.0,"GP-4LA");
-        Sensor humGp5   = new Sensor("HUM-GP-5",   "Humidity",    "MAINTENANCE", 0.0,  "GP-5LA");
-        Sensor tempGp6  = new Sensor("TEMP-GP-6",  "Temperature", "ACTIVE",      22.5, "GP-6LA");
-        Sensor co2Gp7   = new Sensor("CO2-GP-7",   "CO2",         "ACTIVE",      390.0,"GP-7LA");
+        CampusSensor tempGp1  = new CampusSensor("TEMP-GP-1",  "Temperature", "ACTIVE",      23.0, "GP-1LA");
+        CampusSensor co2Gp2   = new CampusSensor("CO2-GP-2",   "CO2",         "ACTIVE",      400.0,"GP-2LA");
+        CampusSensor occGp3   = new CampusSensor("OCC-GP-3",   "Occupancy",   "ACTIVE",      42.0, "GP-3LA");
+        CampusSensor lightGp4 = new CampusSensor("LIGHT-GP-4", "Light",       "ACTIVE",      320.0,"GP-4LA");
+        CampusSensor humGp5   = new CampusSensor("HUM-GP-5",   "Humidity",    "MAINTENANCE", 0.0,  "GP-5LA");
+        CampusSensor tempGp6  = new CampusSensor("TEMP-GP-6",  "Temperature", "ACTIVE",      22.5, "GP-6LA");
+        CampusSensor co2Gp7   = new CampusSensor("CO2-GP-7",   "CO2",         "ACTIVE",      390.0,"GP-7LA");
         // Auditorium has multiple sensors due to its large capacity
-        Sensor tempAud  = new Sensor("TEMP-GP-AUD",  "Temperature", "ACTIVE",    20.0, "GP-AUD");
-        Sensor occAud   = new Sensor("OCC-GP-AUD",   "Occupancy",   "ACTIVE",   250.0, "GP-AUD");
-        Sensor co2Aud   = new Sensor("CO2-GP-AUD",   "CO2",         "ACTIVE",   430.0, "GP-AUD");
-        Sensor lightAud = new Sensor("LIGHT-GP-AUD", "Light",       "ACTIVE",   500.0, "GP-AUD");
+        CampusSensor tempAud  = new CampusSensor("TEMP-GP-AUD",  "Temperature", "ACTIVE",    20.0, "GP-AUD");
+        CampusSensor occAud   = new CampusSensor("OCC-GP-AUD",   "Occupancy",   "ACTIVE",   250.0, "GP-AUD");
+        CampusSensor co2Aud   = new CampusSensor("CO2-GP-AUD",   "CO2",         "ACTIVE",   430.0, "GP-AUD");
+        CampusSensor lightAud = new CampusSensor("LIGHT-GP-AUD", "Light",       "ACTIVE",   500.0, "GP-AUD");
 
         sensorStorage.put(tempGp1.getId(),  tempGp1);
         sensorStorage.put(co2Gp2.getId(),   co2Gp2);
@@ -158,28 +158,28 @@ public class DataStore {
         sensorStorage.put(co2Aud.getId(),   co2Aud);
         sensorStorage.put(lightAud.getId(), lightAud);
 
-        gp1La.getSensorIds().add("TEMP-GP-1");
-        gp2La.getSensorIds().add("CO2-GP-2");
-        gp3La.getSensorIds().add("OCC-GP-3");
-        gp4La.getSensorIds().add("LIGHT-GP-4");
-        gp5La.getSensorIds().add("HUM-GP-5");
-        gp6La.getSensorIds().add("TEMP-GP-6");
-        gp7La.getSensorIds().add("CO2-GP-7");
-        gpAud.getSensorIds().add("TEMP-GP-AUD");
-        gpAud.getSensorIds().add("OCC-GP-AUD");
-        gpAud.getSensorIds().add("CO2-GP-AUD");
-        gpAud.getSensorIds().add("LIGHT-GP-AUD");
+        gp1La.getDeployedSensorIds().add("TEMP-GP-1");
+        gp2La.getDeployedSensorIds().add("CO2-GP-2");
+        gp3La.getDeployedSensorIds().add("OCC-GP-3");
+        gp4La.getDeployedSensorIds().add("LIGHT-GP-4");
+        gp5La.getDeployedSensorIds().add("HUM-GP-5");
+        gp6La.getDeployedSensorIds().add("TEMP-GP-6");
+        gp7La.getDeployedSensorIds().add("CO2-GP-7");
+        gpAud.getDeployedSensorIds().add("TEMP-GP-AUD");
+        gpAud.getDeployedSensorIds().add("OCC-GP-AUD");
+        gpAud.getDeployedSensorIds().add("CO2-GP-AUD");
+        gpAud.getDeployedSensorIds().add("LIGHT-GP-AUD");
 
         // ══════════════════════════════════════════════════════
         //  SENSORS — Java Building
         // ══════════════════════════════════════════════════════
-        Sensor tempJb1  = new Sensor("TEMP-JB-1",  "Temperature", "ACTIVE",      21.0, "JB-1LA");
-        Sensor co2Jb2   = new Sensor("CO2-JB-2",   "CO2",         "ACTIVE",      405.0,"JB-2LA");
-        Sensor occJb3   = new Sensor("OCC-JB-3",   "Occupancy",   "ACTIVE",      28.0, "JB-3LA");
-        Sensor lightJb4 = new Sensor("LIGHT-JB-4", "Light",       "ACTIVE",      340.0,"JB-4LA");
-        Sensor humJb5   = new Sensor("HUM-JB-5",   "Humidity",    "ACTIVE",      60.0, "JB-5LA");
-        Sensor tempJb6  = new Sensor("TEMP-JB-6",  "Temperature", "MAINTENANCE", 0.0,  "JB-6LA");
-        Sensor co2Jb7   = new Sensor("CO2-JB-7",   "CO2",         "ACTIVE",      420.0,"JB-7LA");
+        CampusSensor tempJb1  = new CampusSensor("TEMP-JB-1",  "Temperature", "ACTIVE",      21.0, "JB-1LA");
+        CampusSensor co2Jb2   = new CampusSensor("CO2-JB-2",   "CO2",         "ACTIVE",      405.0,"JB-2LA");
+        CampusSensor occJb3   = new CampusSensor("OCC-JB-3",   "Occupancy",   "ACTIVE",      28.0, "JB-3LA");
+        CampusSensor lightJb4 = new CampusSensor("LIGHT-JB-4", "Light",       "ACTIVE",      340.0,"JB-4LA");
+        CampusSensor humJb5   = new CampusSensor("HUM-JB-5",   "Humidity",    "ACTIVE",      60.0, "JB-5LA");
+        CampusSensor tempJb6  = new CampusSensor("TEMP-JB-6",  "Temperature", "MAINTENANCE", 0.0,  "JB-6LA");
+        CampusSensor co2Jb7   = new CampusSensor("CO2-JB-7",   "CO2",         "ACTIVE",      420.0,"JB-7LA");
 
         sensorStorage.put(tempJb1.getId(),  tempJb1);
         sensorStorage.put(co2Jb2.getId(),   co2Jb2);
@@ -189,13 +189,13 @@ public class DataStore {
         sensorStorage.put(tempJb6.getId(),  tempJb6);
         sensorStorage.put(co2Jb7.getId(),   co2Jb7);
 
-        jb1La.getSensorIds().add("TEMP-JB-1");
-        jb2La.getSensorIds().add("CO2-JB-2");
-        jb3La.getSensorIds().add("OCC-JB-3");
-        jb4La.getSensorIds().add("LIGHT-JB-4");
-        jb5La.getSensorIds().add("HUM-JB-5");
-        jb6La.getSensorIds().add("TEMP-JB-6");
-        jb7La.getSensorIds().add("CO2-JB-7");
+        jb1La.getDeployedSensorIds().add("TEMP-JB-1");
+        jb2La.getDeployedSensorIds().add("CO2-JB-2");
+        jb3La.getDeployedSensorIds().add("OCC-JB-3");
+        jb4La.getDeployedSensorIds().add("LIGHT-JB-4");
+        jb5La.getDeployedSensorIds().add("HUM-JB-5");
+        jb6La.getDeployedSensorIds().add("TEMP-JB-6");
+        jb7La.getDeployedSensorIds().add("CO2-JB-7");
 
         // ══════════════════════════════════════════════════════
         //  INITIALISE EMPTY READING HISTORY FOR ALL SENSORS
@@ -204,6 +204,6 @@ public class DataStore {
     }
 
     public static Map<String, Room> getRooms()    { return roomStorage;  }
-    public static Map<String, Sensor> getSensors() { return sensorStorage; }
+    public static Map<String, CampusSensor> getSensors() { return sensorStorage; }
     public static Map<String, List<SensorReading>> getReadings() { return readingLog; }
 }

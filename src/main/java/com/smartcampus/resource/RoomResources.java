@@ -11,20 +11,16 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * Handles all room management operations for the Smart Campus API.
- *
- *
- *
- *
- * Rooms represent physical spaces across Westminster campus buildings.
+ 
+ *Handles all the  room management operations for the Smart Campus API.
+ * campusRooms represent physical spaces across the campus buildings.
  * A room cannot be deleted if it still has sensors assigned to it -
- * this prevents orphaned sensors with no valid location reference.
+ * this prevents the left out sensors with no valid location references.
  *
- * DELETE is idempotent - repeated requests leave the server in the
+ * DELETE is unchanged   - It is just repeated requests which leave the server in the
  * same final state (room absent),  even if the status code differs
  * between first call (204) and subsequent calls (404).
- *
- *
+
  */
 
 
@@ -34,8 +30,9 @@ import java.util.Map;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class RoomResources {
+    
 
-    // Reference to the shared static room storage ...
+    // References to the shared static room storage ...
     private final Map<String, Room> roomStorage = DataStore.getRooms();
 
     /**
@@ -43,10 +40,11 @@ public class RoomResources {
      * Returns a list of all rooms across campus.
      * Full room objects are returned so clients get all details in one request.
      */
+    
     @GET
     public Response getAllRooms() {
-        Collection<Room> allRooms = roomStorage.values();
-        return Response.ok(allRooms).build();
+        Collection<Room> campusRooms = roomStorage.values();
+        return Response.ok(campusRooms).build();
     }
 
     /**
@@ -55,8 +53,8 @@ public class RoomResources {
      * Returns 201 Created  with a Location header pointing to the new room.
      */
     @POST
-    public Response createRoom(Room room) {
-        if (room == null || room.getId() == null || room.getId().isBlank()) {
+    public Response createRoom(Room campusRoom) {
+        if (campusRoom == null || campusRoom.getId() == null || campusRoom.getId().isBlank()) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(Map.of(
 
@@ -66,12 +64,11 @@ public class RoomResources {
                     ))
                     .build();
         }
-        if (roomStorage.containsKey(room.getId())) {
+        if (roomStorage.containsKey(campusRoom.getId())) {
             return Response.status(Response.Status.CONFLICT)
-                    .entity(Map.of(
-                            "status", 409,
+                    .entity(Map.of("status", 409,
                             "error", "Conflict",
-                            "message", "A room with ID '" + room.getId() + "' is already registered in the system."
+                            "message", "A room with ID '" + campusRoom.getId() + "' is already registered in the system."
                     ))
                     .build();
         }
@@ -80,10 +77,10 @@ public class RoomResources {
 
 
 
-        roomStorage.put(room.getId(), room);
+        roomStorage.put(campusRoom.getId(), campusRoom);
         return Response.status(Response.Status.CREATED)
-                .header("Location", "/api/v1/rooms/" + room.getId())
-                .entity(room)
+                .header("Location", "/api/v1/rooms/" + campusRoom.getId())
+                .entity(campusRoom)
                 .build();
     }
 
@@ -118,9 +115,10 @@ public class RoomResources {
      * DELETE /api/v1/rooms/{roomId}
      * Decommissions a room from the campus system.
      *
-     * Business rule: rooms with active sensors cannot be deleted.
-     * This prevents sensor records from becoming orphaned with no
-     * valid room reference. A RoomNotEmptyException is thrown which
+     * The rooms with active sensors cannot be deleted.
+     * This prevents sensor records from becoming left out with no
+     * valid room reference. 
+     * so,a  RoomNotEmptyException is thrown which
      * the exception mapper converts to a 409 Conflict response.
      */
     @DELETE
@@ -145,14 +143,15 @@ public class RoomResources {
 
 
 
-        // Block deletion if room still has sensors assigned
-        if (!room.getSensorIds().isEmpty()) {
+        // Block deletion if room still has sensors assigned...
+        if (!room.getDeployedSensorIds().isEmpty()) {
             throw new RoomNotEmptyException(roomId);
         }
 
 
         roomStorage.remove(roomId);
+        
 
-        return Response.noContent().build(); // 204 No Content
+        return Response.noContent().build(); // 204  No Content
     }
 }

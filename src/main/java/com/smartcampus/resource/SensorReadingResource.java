@@ -1,7 +1,7 @@
 package com.smartcampus.resource;
 
 import com.smartcampus.exception.SensorUnavailableException;
-import com.smartcampus.model.Sensor;
+import com.smartcampus.model.CampusSensor;
 import com.smartcampus.model.SensorReading;
 import com.smartcampus.store.DataStore;
 import jakarta.ws.rs.*;
@@ -26,10 +26,10 @@ import java.util.Map;
 public class SensorReadingResource {
 
     // The parent sensor this resource is operating on
-    private final Sensor parentSensor;
+    private final CampusSensor assignedSensors;
 
-    public SensorReadingResource(Sensor parentSensor) {
-        this.parentSensor = parentSensor;
+    public SensorReadingResource(CampusSensor parentSensor) {
+        this.assignedSensors = parentSensor;
     }
 
     /**
@@ -38,9 +38,9 @@ public class SensorReadingResource {
      */
     @GET
     public Response getReadings() {
-        List<SensorReading> history = DataStore.getReadings()
-                .getOrDefault(parentSensor.getId(), new ArrayList<>());
-        return Response.ok(history).build();
+        List<SensorReading> readingHistory = DataStore.getReadings()
+                .getOrDefault(assignedSensors.getId(), new ArrayList<>());
+        return Response.ok(readingHistory).build();
     }
 
     /**
@@ -58,8 +58,8 @@ public class SensorReadingResource {
     public Response addReading(SensorReading reading) {
 
         // Block readings from sensors under maintenance
-        if ("MAINTENANCE".equalsIgnoreCase(parentSensor.getStatus())) {
-            throw new SensorUnavailableException(parentSensor.getId());
+        if ("MAINTENANCE".equalsIgnoreCase(assignedSensors.getStatus())) {
+            throw new SensorUnavailableException(assignedSensors.getId());
         }
 
         if (reading == null) {
@@ -73,18 +73,18 @@ public class SensorReadingResource {
         }
 
         // Create a new reading with auto-generated ID and timestamp
-        SensorReading newReading = new SensorReading(reading.getValue());
+        SensorReading recordedReading = new SensorReading(reading.getMeasuredValue());
 
         // Store in the reading log
         DataStore.getReadings()
-                .computeIfAbsent(parentSensor.getId(), k -> new ArrayList<>())
-                .add(newReading);
+                .computeIfAbsent(assignedSensors.getId(), k -> new ArrayList<>())
+                .add(recordedReading);
 
         // Side effect: keep parent sensor currentValue in sync
-        parentSensor.setCurrentValue(newReading.getValue());
+        assignedSensors.setCurrentValue(recordedReading.getMeasuredValue());
 
         return Response.status(Response.Status.CREATED)
-                .entity(newReading)
+                .entity(recordedReading)
                 .build();
     }
 }

@@ -7,17 +7,18 @@ import java.util.List;
 public class Room {
 
     // Unique room code
+    
     private String id;
 
     // name shown to facilities managers
     private String name;
 
-    // Maximum number of people allowed in this room (fire safety)
+    // The Max number of people allowed in this room (fire safety)
     private int capacity;
 
     // List of sensor IDs currently deployed in this room
 
-    private List<String> sensorIds = new ArrayList<>();
+    private List<String> deployedSensorIds = new ArrayList<>();
 
     public Room() {}
 
@@ -28,7 +29,8 @@ public class Room {
     }
 
     public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
+    public void setId(String id) { this.id = id; } 
+    
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -36,6 +38,7 @@ public class Room {
     public int getCapacity() { return capacity; }
     public void setCapacity(int capacity) { this.capacity = capacity; }
 
-    public List<String> getSensorIds() { return sensorIds; }
-    public void setSensorIds(List<String> sensorIds) { this.sensorIds = sensorIds; }
+    public List<String> getDeployedSensorIds() { return deployedSensorIds; }
+    
+    public void setDeployedSensorIds(List<String> deployedSensorIds) { this.deployedSensorIds = deployedSensorIds; }
 }

@@ -7,7 +7,8 @@ package com.smartcampus.exception;
  */
 public class RoomNotEmptyException extends RuntimeException {
     public RoomNotEmptyException(String roomId) {
-        super("Room '" + roomId + "' cannot be decommissioned: it still has sensors actively " +
-                "assigned to it. Please reassign or remove all sensors before deleting this room.");
+        
+        super("Room '" + roomId + "' cannot  be decommissioned:  it still has sensors actively " +
+                "assigned to it. Please reassign or  remove all sensors before deleting this room..");
     }
 }
