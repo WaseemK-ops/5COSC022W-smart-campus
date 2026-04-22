@@ -34,7 +34,7 @@ public class DiscoveryResources {
         responseData.put("api", "Smart Campus Sensor & Room Management API");
         responseData.put("version", "1.0.0");
         responseData.put("status", "healthy");
-        responseData.put("university", "University of Westminster");
+        responseData.put("university", "University of IIT");
         responseData.put("description", "RESTful API for managing campus rooms and IoT sensor infrastructure.");
 
         // HATEOAS links - clients navigate the API using these

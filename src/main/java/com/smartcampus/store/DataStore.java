@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * In-memory data store for the Smart Campus API.
  * Uses ConcurrentHashMap to safely handle concurrent requests.
  *
- * Pre-loaded with rooms and sensors across three Westminster buildings:
+ * Pre - loaded with rooms and sensors across three IIT buildings :
  *   SP = Spencer Building  |  GP = GP Building  |  JB = Java Building
  *
  * Sensor format: [TYPE]-[BUILDING]-[FLOOR] e.g. TEMP-SP-1
@@ -26,6 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DataStore {
 
     // All campus rooms stored by their unique room ID
+    
     private static final Map<String, Room> roomStorage = new ConcurrentHashMap<>();
 
     // All sensors stored by their unique sensor ID
@@ -35,6 +36,7 @@ public class DataStore {
     private static final Map<String, List<SensorReading>> readingLog = new ConcurrentHashMap<>();
 
     static {
+        
 
         // ══════════════════════════════════════════════════════
         //  SPENCER BUILDING (SP) — Floors 1 to 7
@@ -46,6 +48,9 @@ public class DataStore {
         Room sp5La = new Room("SP-5LA", "Spencer Building - Floor 5 Lecture Area", 60);
         Room sp6La = new Room("SP-6LA", "Spencer Building - Floor 6 Lecture Area", 50);
         Room sp7La = new Room("SP-7LA", "Spencer Building - Floor 7 Lecture Area", 50);
+        
+        
+        
 
         roomStorage.put(sp1La.getId(), sp1La);
         roomStorage.put(sp2La.getId(), sp2La);
@@ -55,6 +60,11 @@ public class DataStore {
         roomStorage.put(sp6La.getId(), sp6La);
         roomStorage.put(sp7La.getId(), sp7La);
 
+        
+        
+        
+        
+        
         // ══════════════════════════════════════════════════════
         //   (GP) — Floors 1 to 7 + Auditorium
         // ═════════════════════════════════════════════════════
@@ -66,6 +76,7 @@ public class DataStore {
         Room gp6La = new Room("GP-6LA", "GP - Floor 6 Lecture Area", 65);
         Room gp7La = new Room("GP-7LA", "GP - Floor 7 Lecture Area", 60);
         Room gpAud = new Room("GP-AUD", "GP - Main Auditorium",      400);
+        
 
         roomStorage.put(gp1La.getId(), gp1La);
         roomStorage.put(gp2La.getId(), gp2La);
@@ -79,6 +90,10 @@ public class DataStore {
 
 
 
+        
+        
+        
+        
         // ══════════════════════════════════════════════════════
         //  JAVA BUILDING (JB) — Floors 1 to 7
         // ══════════════════════════════════════════════════════
@@ -89,6 +104,9 @@ public class DataStore {
         Room jb5La = new Room("JB-5LA", "Java Building - Floor 5 Lecture Area", 55);
         Room jb6La = new Room("JB-6LA", "Java Building - Floor 6 Lecture Area", 50);
         Room jb7La = new Room("JB-7LA", "Java Building - Floor 7 Lecture Area", 45);
+        
+        
+        
 
         roomStorage.put(jb1La.getId(), jb1La);
         roomStorage.put(jb2La.getId(), jb2La);
@@ -102,8 +120,9 @@ public class DataStore {
 
 
 
+        
         // ══════════════════════════════════════════════════════
-        //  SENSORS — Spencer Building
+        //  SENSORS IN — Spencer Building
         // ══════════════════════════════════════════════════════
         CampusSensor tempSp1  = new CampusSensor("TEMP-SP-1",  "Temperature", "ACTIVE",      22.1, "SP-1LA");
         CampusSensor co2Sp2   = new CampusSensor("CO2-SP-2",   "CO2",         "ACTIVE",      415.0,"SP-2LA");
@@ -129,9 +148,14 @@ public class DataStore {
         sp5La.getDeployedSensorIds().add("HUM-SP-5");
         sp6La.getDeployedSensorIds().add("TEMP-SP-6");
         sp7La.getDeployedSensorIds().add("CO2-SP-7");
+        
+        
+        
+        
+        
 
         // ══════════════════════════════════════════════════════
-        //  SENSORS — Gregory Peck Building (including Auditorium)
+        //  SENSORS IN — GP Building (including Auditorium)
         // ══════════════════════════════════════════════════════
         CampusSensor tempGp1  = new CampusSensor("TEMP-GP-1",  "Temperature", "ACTIVE",      23.0, "GP-1LA");
         CampusSensor co2Gp2   = new CampusSensor("CO2-GP-2",   "CO2",         "ACTIVE",      400.0,"GP-2LA");
@@ -169,6 +193,10 @@ public class DataStore {
         gpAud.getDeployedSensorIds().add("OCC-GP-AUD");
         gpAud.getDeployedSensorIds().add("CO2-GP-AUD");
         gpAud.getDeployedSensorIds().add("LIGHT-GP-AUD");
+        
+        
+        
+        
 
         // ══════════════════════════════════════════════════════
         //  SENSORS — Java Building
@@ -188,6 +216,9 @@ public class DataStore {
         sensorStorage.put(humJb5.getId(),   humJb5);
         sensorStorage.put(tempJb6.getId(),  tempJb6);
         sensorStorage.put(co2Jb7.getId(),   co2Jb7);
+        
+        
+        
 
         jb1La.getDeployedSensorIds().add("TEMP-JB-1");
         jb2La.getDeployedSensorIds().add("CO2-JB-2");
@@ -196,12 +227,18 @@ public class DataStore {
         jb5La.getDeployedSensorIds().add("HUM-JB-5");
         jb6La.getDeployedSensorIds().add("TEMP-JB-6");
         jb7La.getDeployedSensorIds().add("CO2-JB-7");
+        
+        
+        
 
         // ══════════════════════════════════════════════════════
-        //  INITIALISE EMPTY READING HISTORY FOR ALL SENSORS
+        //  INITIALISE EMPTY READING HISTORY FOR ALL SENSORS .
         // ══════════════════════════════════════════════════════
         sensorStorage.keySet().forEach(id -> readingLog.put(id, new ArrayList<>()));
     }
+    
+    
+    
 
     public static Map<String, Room> getRooms()    { return roomStorage;  }
     public static Map<String, CampusSensor> getSensors() { return sensorStorage; }
