@@ -47,23 +47,6 @@ class RoomNotEmptyExceptionMapper implements ExceptionMapper<RoomNotEmptyExcepti
  * The problem is a bad reference inside the JSON payload, making
  * the request contextually unprocessable despite being syntactically correct.
  */
-@Provider
-class LinkedResourceNotFoundExceptionMapper implements ExceptionMapper<LinkedResourceNotFoundException> {
-    @Override
-    public Response toResponse(LinkedResourceNotFoundException e) {
-        return Response.status(422)
-                .type(MediaType.APPLICATION_JSON)
-                .entity(Map.of(
-                        "status", 422,
-                        "error", "Unprocessable Entity",
-                        "message", e.getMessage()
-                ))
-                .build();
-    }
-}
-
-
-
 
 
 /**
