@@ -268,6 +268,7 @@ that attackers can use to compromise the system:
 ```
 smart-campus-api/
 ├── pom.xml
+├── README.md
 └── src/main/java/com/smartcampus/
     ├── Main.java
     ├── application/
