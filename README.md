@@ -261,4 +261,32 @@ that attackers can use to compromise the system:
  - The deployement directory structure is revealed via file system paths, which can help path traversal attacks.
  - By exposing business logic flow , the method call chain enables attackers to create malicious payloads that take advantage of particular code paths.
 
- In my API the GlobalExceptionMapper catches every unexpected exception  and returns only  a clean generic 500 message to the client. The full stack tace is logged server-side only where only developers can access it. This makes sure zero internal information / data ever reaches an attacker.
+ In my API the GlobalExceptionMapper catches every unexpected exception  and returns only  a clean generic 500 message to the client. The full stack tace is logged server-side only where only developers can access it. This makes sure zero internal information / data ever reaches an attacker. 
+
+
+ ## Project Structure
+
+smart-campus-api/
+├── pom.xml
+└── src/main/java/com/smartcampus/
+    ├── Main.java
+    ├── application/
+    │   └── SmartCampusApplication.java
+    ├── exception/
+    │   ├── ExceptionMappers.java
+    │   ├── LinkedResourceNotFoundException.java
+    │   ├── RoomNotEmptyException.java
+    │   └── SensorUnavailableException.java
+    ├── filter/
+    │   └── LoggingFilter.java
+    ├── model/
+    │   ├── CampusSensor.java
+    │   ├── Room.java
+    │   └── SensorReading.java
+    ├── resource/
+    │   ├── DiscoveryResources.java
+    │   ├── RoomResources.java
+    │   ├── SensorReadingResource.java
+    │   └── SensorResources.java
+    └── store/
+        └── DataStore.java
