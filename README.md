@@ -264,7 +264,9 @@ that attackers can use to compromise the system:
  In my API the GlobalExceptionMapper catches every unexpected exception  and returns only  a clean generic 500 message to the client. The full stack tace is logged server-side only where only developers can access it. This makes sure zero internal information / data ever reaches an attacker. 
 
 
- ## Project Structure
+Yes update it! The exception package has changed. Here's the updated structure:
+markdown## Project Structure
+
 ```
 smart-campus-api/
 ├── pom.xml
@@ -274,10 +276,13 @@ smart-campus-api/
     ├── application/
     │   └── SmartCampusApplication.java
     ├── exception/
-    │   ├── ExceptionMappers.java
+    │   ├── GlobalExceptionMapper.java
     │   ├── LinkedResourceNotFoundException.java
+    │   ├── LinkedResourceNotFoundExceptionMapper.java
     │   ├── RoomNotEmptyException.java
-    │   └── SensorUnavailableException.java
+    │   ├── RoomNotEmptyExceptionMapper.java
+    │   ├── SensorUnavailableException.java
+    │   └── SensorUnavailableExceptionMapper.java
     ├── filter/
     │   └── LoggingFilter.java
     ├── model/
