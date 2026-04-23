@@ -265,7 +265,7 @@ that attackers can use to compromise the system:
 
 
  ## Project Structure
-
+```
 smart-campus-api/
 ├── pom.xml
 └── src/main/java/com/smartcampus/
@@ -290,3 +290,4 @@ smart-campus-api/
     │   └── SensorResources.java
     └── store/
         └── DataStore.java
+```
