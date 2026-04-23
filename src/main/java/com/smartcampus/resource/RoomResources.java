@@ -145,13 +145,18 @@ public class RoomResources {
 
         // Block deletion if room still has sensors assigned...
         if (!room.getDeployedSensorIds().isEmpty()) {
-            throw new RoomNotEmptyException(roomId);
+            return Response.status(Response.Status.CONFLICT)
+                    .entity(Map.of(
+                        "status", 409,
+                        "error", "Conflict",
+                        "message", "Room '" + roomId + "' cannot be deleted because it still has active sensors. Please remove or reassign sensors first."
+                    ))
+                    .build();
         }
 
-
+        // If no sensors, proceed with removal
         roomStorage.remove(roomId);
         
-
-        return Response.noContent().build(); // 204  No Content
+        return Response.noContent().build(); // 204 No Content
     }
 }
