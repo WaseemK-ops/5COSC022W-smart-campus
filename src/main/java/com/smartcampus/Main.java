@@ -11,11 +11,13 @@ import java.util.logging.Logger;
 
 /**
  * 5COSC022W -   Client Server Architectures Coursework
- * Smart Campus Sensor and Room Management API
+ * Smart Campus Sensor and Room Management API - IIT CAMPUS has been used an example.
  *
  * Author: Mohamed Waseem  Mohamed Kaleel
  * Student ID : w2120585 | 20232722
  * This is the main entry point of the application.
+ * 
+ * 
  * It starts an embedded Grizzly HTTP server and deploys
  * the JAX-RS application on port 8080 .
  */
@@ -33,7 +35,7 @@ public class Main {
                 false
         );
         
-        
+               
         server.start();
         LOGGER.info("=================================================");
         LOGGER.info("  Smart Campus API - Mohamed Waseem");
