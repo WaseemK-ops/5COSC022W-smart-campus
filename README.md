@@ -135,10 +135,9 @@ Returns the full list of historical readings for that sensor.
 
 ### 9. Try to post a reading to a maintenance sensor
 
-curl -X POST http://localhost:8080/api/v1/sensors/TEMP-MAR-01/readings -H "Content-Type: application/json" -d "{\"measuredValue\":20.0}"
+curl -X POST http://localhost:8080/api/v1/sensors/LIGHT-SP-4/readings -H "Content-Type: application/json" -d "{\"measuredValue\":20.0}"
 
-Returns 403 Forbidden because TEMP-MAR-01 is currently under maintenance.
-
+Returns 403 Forbidden because LIGHT-SP-4 is currently under maintenance.
 &nbsp;
 
 
